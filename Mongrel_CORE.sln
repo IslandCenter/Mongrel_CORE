@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mongrel", "Mongrel_CORE\Mongrel.csproj", "{8C88A092-D9FE-45C2-8248-9535EF14098A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongrelCLI", "MongrelCLI\MongrelCLI.csproj", "{39DB050B-CEC9-433E-BACE-B0DE3693332B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C88A092-D9FE-45C2-8248-9535EF14098A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C88A092-D9FE-45C2-8248-9535EF14098A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C88A092-D9FE-45C2-8248-9535EF14098A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C88A092-D9FE-45C2-8248-9535EF14098A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39DB050B-CEC9-433E-BACE-B0DE3693332B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39DB050B-CEC9-433E-BACE-B0DE3693332B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39DB050B-CEC9-433E-BACE-B0DE3693332B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39DB050B-CEC9-433E-BACE-B0DE3693332B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50141929-F2B6-49BD-80AB-4A5591A7B97E}
+	EndGlobalSection
+EndGlobal

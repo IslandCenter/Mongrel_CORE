@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Script>
+	<Name>Mongrel</Name>
+	<ShortDescription>Report Geo consolidation tool</ShortDescription>
+	<LongDescription>
+		Mongrel will take reports from multiple different sources look for Geo points within and combine them all into a structured CSV document.
+	</LongDescription>
+	<PointOfContact>Matthew Harper</PointOfContact>
+
+	<Executable>MongrelCLI.exe</Executable>
+
+	<Arguments>
+		<Directory preppend="-i &quot;" append="&quot;" required="true">
+			Input Directory
+		</Directory>
+		<Directory preppend="-o &quot;" append="&quot;" required="true">
+			Output Directory
+		</Directory>
+		<Text preppend="-n &quot;" append="&quot;" required="false">
+			Output Name
+		</Text>
+		<Text preppend="-l &quot;" append="&quot;" required="false">
+			Log Directory
+		</Text>
+		<Text preppend="-v &quot;" append="&quot;" required="false">
+			Log Level
+		</Text>
+	</Arguments>
+
+</Script>
