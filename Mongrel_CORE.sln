@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mongrel", "Mongrel_CORE\Mongrel.csproj", "{8C88A092-D9FE-45C2-8248-9535EF14098A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mongrel", "Mongrel_CORE\Mongrel.csproj", "{8C88A092-D9FE-45C2-8248-9535EF14098A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongrelCLI", "MongrelCLI\MongrelCLI.csproj", "{39DB050B-CEC9-433E-BACE-B0DE3693332B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongrelCLI", "MongrelCLI\MongrelCLI.csproj", "{39DB050B-CEC9-433E-BACE-B0DE3693332B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

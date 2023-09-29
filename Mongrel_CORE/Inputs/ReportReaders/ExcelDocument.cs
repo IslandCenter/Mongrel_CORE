@@ -52,10 +52,10 @@ namespace Mongrel.Inputs.ReportReaders
         {
             (string sheetName, List<string> columnNames, IEnumerable<IEnumerable<string>> rowValues) outValues = (null, null, null);
 
-            foreach (var sheet in ValidSheetAndIndexes(validSheetAndIndex))
+            foreach (var (name, index) in ValidSheetAndIndexes(validSheetAndIndex))
             {
-                SeekToHeaderRow(sheet.index);
-                outValues.sheetName = sheet.name;
+                SeekToHeaderRow(index);
+                outValues.sheetName = name;
                 outValues.columnNames = GetRowValues().ToList();
                 outValues.rowValues = GetRowsFromSheet();
                 yield return outValues;
