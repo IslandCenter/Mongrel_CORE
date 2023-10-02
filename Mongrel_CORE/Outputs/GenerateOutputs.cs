@@ -1,48 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Mongrel.Outputs.OutputTypes;
+﻿using Mongrel.Outputs.OutputTypes;
+using Yipper;
 
-namespace Mongrel.Outputs
+namespace Mongrel.Outputs;
+
+public class GenerateOutputs : IDisposable
 {
-    public class GenerateOutputs : IDisposable
+    public const string DefaultOutputName = "Consolidated_Geo_Output";
+    public string OutputName;
+    private readonly List<OutputFile> _outputs;
+
+    public GenerateOutputs(string outputDir, string outputFileName = null)
     {
-        public const string DefaultOutputName = "Consolidated_Geo_Output";
-        public string OutputName;
-        private readonly List<OutputFile> _outputs;
+        OutputName = $"{Path.Combine(outputDir, $"{(string.IsNullOrEmpty(outputFileName) ? DefaultOutputName : outputFileName)}")}";
+        _outputs = GetOutputs().ToList();
+    }
 
-        public GenerateOutputs(string outputDir, string outputFileName = null)
+    private IEnumerable<OutputFile> GetOutputs()
+    {
+        yield return new CsvOut($"{OutputName}.csv");
+        yield return new Kml($"{OutputName}.kml");
+    }
+
+    public void WriteLocations(IEnumerable<Locations> locations)
+    {
+        var totalLocationsObjects = 0;
+        var totalLocations = 0;
+
+        foreach (var location in locations)
         {
-            OutputName = $"{Path.Combine(outputDir, $"{(string.IsNullOrEmpty(outputFileName) ? DefaultOutputName : outputFileName)}")}";
-            _outputs = GetOutputs().ToList();
-        }
+            totalLocationsObjects++;
+            var locationsWrittenPerFile = 0;
 
-        private IEnumerable<OutputFile> GetOutputs()
-        {
-            yield return new CsvOut($"{OutputName}.csv");
-            yield return new Kml($"{OutputName}.kml");
-        }
-
-        public void WriteLocations(IEnumerable<Locations> locations)
-        {
-            if (locations == null) return;
-
-            foreach (var location in locations)
+            foreach (var output in _outputs.Where(_ => location.ConvertedLon != 0 && location.ConvertedLat != 0))
             {
-                foreach (var output in _outputs.Where(_ => location.ConvertedLon != 0 && location.ConvertedLat != 0))
-                {
-                    output.WriteLocation(location);
-                }
+                output.WriteLocation(location);
+                locationsWrittenPerFile++;
             }
+            totalLocations += locationsWrittenPerFile;
+            Logger.Instance.Info($"Wrote {locationsWrittenPerFile} locations from location object {totalLocationsObjects}");
         }
+        Logger.Instance.Info($"Wrote {totalLocations} locations from {totalLocationsObjects} location objects");
+    }
 
-        public void Dispose()
+    public void Dispose()
+    {
+        foreach (var output in _outputs)
         {
-            foreach (var output in _outputs)
-            {
-                output.Dispose();
-            }
+            output.Dispose();
         }
     }
 }

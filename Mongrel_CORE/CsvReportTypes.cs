@@ -1,33 +1,30 @@
-﻿using System;
+﻿namespace Mongrel;
 
-namespace Mongrel
+internal class CsvReportTypes
 {
-    internal class CsvReportTypes
+    public enum CsvReports
     {
-        public enum CsvReports
-        {
-            Unknown = -1,
-            GeoFetch = 0,
-        }
+        Unknown = -1,
+        GeoFetch = 0,
+    }
 
-        public static string GetFileNameFromFormat(CsvReports format)
+    public static string GetFileNameFromFormat(CsvReports format)
+    {
+        return format switch
         {
-            return format switch
-            {
-                CsvReports.Unknown => "unknown",
-                CsvReports.GeoFetch => "geofetch",
-                _ => throw new ArgumentOutOfRangeException(nameof(format), format, null)
-            };
-        }
+            CsvReports.Unknown => "unknown",
+            CsvReports.GeoFetch => "geofetch",
+            _ => throw new ArgumentOutOfRangeException(nameof(format), format, null)
+        };
+    }
 
-        public static CsvReports GetFileFormatsFromName(string name)
+    public static CsvReports GetFileFormatsFromName(string name)
+    {
+        return name switch
         {
-            return name switch
-            {
-                "unknown" => CsvReports.Unknown,
-                "axiom" => CsvReports.GeoFetch,
-                _ => throw new Exception("Unknown CSV extension type found")
-            };
-        }
+            "unknown" => CsvReports.Unknown,
+            "axiom" => CsvReports.GeoFetch,
+            _ => throw new Exception("Unknown CSV extension type found")
+        };
     }
 }
