@@ -52,7 +52,8 @@ public class ExcelDocument : IDisposable
         {
             SeekToHeaderRow(index);
             outValues.sheetName = name;
-            outValues.columnNames = GetRowValues().ToList();
+            var list = GetRowValues().ToList();
+            outValues.columnNames = list;
             outValues.rowValues = GetRowsFromSheet();
             yield return outValues;
         }
@@ -98,7 +99,7 @@ public class ExcelDocument : IDisposable
         }
     }
 
-    private IEnumerable<string> GetRowValues()
+    private IEnumerable<string?> GetRowValues()
     {
         var columnCount = _reader.FieldCount;
 

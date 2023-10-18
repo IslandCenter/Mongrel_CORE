@@ -45,10 +45,10 @@ internal class ExcelRead : Reader
         ("Locations Searches", 0),
     };
 
-    private ReportReader _report;
-    private ExcelDocument _document;
+    private ReportReader? _report;
+    private ExcelDocument? _document;
 
-    public override IEnumerable<Locations> GetLocations(string filePath)
+    public override IEnumerable<Locations>? GetLocations(string filePath)
     {
         _document = new ExcelDocument(filePath);
         var reportType = GetReportType(filePath, _document.SheetNames);
@@ -59,7 +59,7 @@ internal class ExcelRead : Reader
         return _report == null ? new List<Locations>() : _report.GetLocations();
     }
 
-    public static ReportReader ReportFactory(ExcelReport reportType, ExcelDocument document)
+    public static ReportReader? ReportFactory(ExcelReport reportType, ExcelDocument document)
     {
         return reportType switch
         {

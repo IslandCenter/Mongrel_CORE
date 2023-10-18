@@ -3,5 +3,5 @@
 public abstract class Reader : IDisposable
 {
     public abstract void Dispose();
-    public abstract IEnumerable<Locations> GetLocations(string file);
+    public abstract IEnumerable<Locations>? GetLocations(string file);
 }

@@ -2,7 +2,7 @@
 
 namespace Mongrel;
 
-public struct CsvRecord
+public readonly struct CsvRecord
 {
     public CsvRecord(Locations rowData, int id = -1)
     {
@@ -39,7 +39,7 @@ public struct CsvRecord
     [Index(5)] public string FileName { get; }
     [Index(6)] public string Hash { get; }
     [Index(7)] public string Path { get; }
-    [Index(8)] public string TimeStr { get; }
+    [Index(8)] public string? TimeStr { get; }
     [Index(9)] public string Timestamp { get; }
     [Index(10)] public string OriginalLat { get; }
     [Index(11)] public string OriginalLon { get; }

@@ -9,7 +9,7 @@ public class GenerateOutputs : IDisposable
     public string OutputName;
     private readonly List<OutputFile> _outputs;
 
-    public GenerateOutputs(string outputDir, string outputFileName = null)
+    public GenerateOutputs(string outputDir, string? outputFileName = null)
     {
         OutputName = $"{Path.Combine(outputDir, $"{(string.IsNullOrEmpty(outputFileName) ? DefaultOutputName : outputFileName)}")}";
         _outputs = GetOutputs().ToList();

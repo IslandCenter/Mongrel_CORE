@@ -28,7 +28,7 @@ public class GeoFetchHeaders
 
 internal class CsvRead : Reader
 {
-    public override IEnumerable<Locations> GetLocations(string filePath)
+    public override IEnumerable<Locations>? GetLocations(string filePath)
     {
         FixHeaders(filePath);
         using var reader = new StreamReader(filePath);

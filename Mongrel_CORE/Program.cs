@@ -39,11 +39,11 @@ public class Mongrel
             Logger.Instance.Info($"Reading file: {file}");
             filesRead++;
 
-            IEnumerable<Locations> locations = null;
+            IEnumerable<Locations>? locations = null;
 
             try
             {
-                Reader reader = null;
+                Reader? reader = null;
 
                 switch (GetFileFormatsFromName(new FileInfo(file).Extension))
                 {

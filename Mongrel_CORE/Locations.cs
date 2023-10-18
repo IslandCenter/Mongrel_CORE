@@ -7,7 +7,7 @@ public struct Locations
         string fileName,
         string hash,
         string path,
-        string timeStr,
+        string? timeStr,
         string mgrs,
         string altitude,
         string altitudeMode,
@@ -56,7 +56,7 @@ public struct Locations
     public string FileName { get; set; }
     public string Hash { get; set; }
     public string Path { get; set; }
-    public string TimeStr { get; set; }
+    public string? TimeStr { get; set; }
     public string Mgrs { get; set; }
     public string Altitude { get; set; }
     public string AltitudeMode { get; set; }

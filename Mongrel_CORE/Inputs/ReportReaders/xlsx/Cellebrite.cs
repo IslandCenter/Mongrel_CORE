@@ -6,7 +6,7 @@ public class Cellebrite : ReportReader
 {
     public Cellebrite(ExcelDocument document, IEnumerable<(string name, int index)> validSheetAndIndex) : base(document, validSheetAndIndex) { }
 
-    public override IEnumerable<Locations> GetLocations()
+    public override IEnumerable<Locations>? GetLocations()
     {
         var sheets = Document.GetRowsFromValidSheets(ValidSheetAndIndex);
 
