@@ -12,7 +12,7 @@ public struct Locations
         string altitude,
         string altitudeMode,
         string load,
-        string category,
+        string sheetName,
         string reportType,
         string deleted,
         string bssid,
@@ -36,7 +36,7 @@ public struct Locations
         Altitude = altitude;
         AltitudeMode = altitudeMode;
         Load = load;
-        Category = category;
+        SheetName = sheetName;
         ReportType = reportType;
         Deleted = deleted;
         Bssid = bssid;
@@ -61,7 +61,7 @@ public struct Locations
     public string Altitude { get; set; }
     public string AltitudeMode { get; set; }
     public string Load { get; set; }
-    public string Category { get; set; }
+    public string SheetName { get; set; }
     public string ReportType { get; set; }
     public string Deleted { get; set; }
     public string Bssid { get; set; }

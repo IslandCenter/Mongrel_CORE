@@ -51,7 +51,7 @@ public class Cellebrite : ReportReader
                 Altitude = "",
                 AltitudeMode = "",
                 Load = "",
-                Category = category,
+                SheetName = category,
                 ReportType = "Cellebrite",
                 Deleted = deleted,
                 Bssid = bssid,

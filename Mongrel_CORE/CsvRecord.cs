@@ -24,7 +24,7 @@ public readonly struct CsvRecord
         Altitude = rowData.Altitude;
         AltitudeMode = rowData.AltitudeMode;
         Load = rowData.Load;
-        Category = rowData.Category;
+        SheetName = rowData.SheetName;
         ReportType = rowData.ReportType;
         Deleted = rowData.Deleted;
         Bssid = rowData.Bssid;
@@ -49,7 +49,7 @@ public readonly struct CsvRecord
     [Index(15)] public string Altitude { get; }
     [Index(16)] public string AltitudeMode { get; }
     [Index(17)] public string Load { get; }
-    [Index(18)] public string Category { get; }
+    [Index(18)] public string SheetName { get; }
     [Index(19)] public string ReportType { get; }
     [Index(20)] public string Deleted { get; }
     [Index(21)] public string Bssid { get; }

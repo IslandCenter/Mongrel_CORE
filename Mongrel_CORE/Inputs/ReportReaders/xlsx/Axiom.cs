@@ -92,7 +92,7 @@ public class Axiom : ReportReader
                 Altitude = altitude,
                 AltitudeMode = "",
                 Load = "",
-                Category = sheetName,
+                SheetName = sheetName,
                 ReportType = "Axiom",
                 Deleted = deleted,
                 Bssid = "",

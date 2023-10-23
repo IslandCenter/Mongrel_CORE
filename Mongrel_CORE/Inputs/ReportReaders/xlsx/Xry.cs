@@ -25,8 +25,8 @@ public class Xry : ReportReader
             gpsTime = "";
         if (!dirtyDict.TryGetValue("Time", out var time))
             time = "";
-        if (!dirtyDict.TryGetValue("Type", out var category))
-            category = "";
+        if (!dirtyDict.TryGetValue("Type", out var sheetName))
+            sheetName = "";
         if (!dirtyDict.TryGetValue("Related Application", out var notes))
             notes = "";
 
@@ -46,7 +46,7 @@ public class Xry : ReportReader
             Altitude = altitude,
             AltitudeMode = "",
             Load = "",
-            Category = category,
+            SheetName = sheetName,
             ReportType = "XRY",
             Deleted = "",
             Bssid = "",
@@ -104,7 +104,7 @@ public class Xry : ReportReader
             Altitude = "",
             AltitudeMode = "",
             Load = "",
-            Category = "RAW",
+            SheetName = "RAW",
             ReportType = "XRY",
             Deleted = "",
             Bssid = "",
@@ -144,7 +144,7 @@ public class Xry : ReportReader
             Altitude = "",
             AltitudeMode = "",
             Load = "",
-            Category = "Geographic Link",
+            SheetName = "Geographic Link",
             ReportType = "XRY",
             Deleted = "",
             Bssid = "",

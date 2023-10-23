@@ -53,7 +53,7 @@ public class BulkExtractor : ReportReader
                 Altitude = "",
                 AltitudeMode = "",
                 Load = "",
-                Category = relatedApplication,
+                SheetName = relatedApplication,
                 ReportType = "Bulk Extractor",
                 Deleted = "",
                 Bssid = "",
