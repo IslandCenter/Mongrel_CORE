@@ -79,7 +79,6 @@ internal class CsvRead : Reader
         {
             Logger.Instance.Info("Attempting to read file as GeoFetch CSV");
             records = csv.GetRecords<GeoFetchHeaders>();
-
         }
         catch
         {

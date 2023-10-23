@@ -74,4 +74,5 @@ public struct Locations
     public string Timestamp { get; set; }
     public double ConvertedLon { get; set; }
     public double ConvertedLat { get; set; }
+
 }
