@@ -104,7 +104,7 @@ public class Xry : ReportReader
             Altitude = "",
             AltitudeMode = "",
             Load = "",
-            Category = "",
+            Category = "RAW",
             ReportType = "XRY",
             Deleted = "",
             Bssid = "",
