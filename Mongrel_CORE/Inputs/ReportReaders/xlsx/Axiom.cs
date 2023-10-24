@@ -93,6 +93,7 @@ public class Axiom : ReportReader
                 AltitudeMode = "",
                 Load = "",
                 SheetName = sheetName,
+                ColumnName = "Center of Map",
                 ReportType = "Axiom",
                 Deleted = deleted,
                 Bssid = "",

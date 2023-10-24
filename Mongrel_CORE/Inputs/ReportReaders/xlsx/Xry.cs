@@ -47,6 +47,7 @@ public class Xry : ReportReader
             AltitudeMode = "",
             Load = "",
             SheetName = sheetName,
+            ColumnName = "Latitude_Longitude",
             ReportType = "XRY",
             Deleted = "",
             Bssid = "",
@@ -66,7 +67,11 @@ public class Xry : ReportReader
     {
         if (!dirtyDict.TryGetValue("Raw", out var gpsString))
             gpsString = "";
-        if(string.IsNullOrEmpty(gpsString))
+
+        if (!dirtyDict.TryGetValue("sheetName", out var sheetName))
+            sheetName = "";
+
+        if (string.IsNullOrEmpty(gpsString))
         {
             Logger.Instance.Error($"Raw string detected but is Empty or Null in File: {Document.FileName}");
             return new Locations();
@@ -104,7 +109,8 @@ public class Xry : ReportReader
             Altitude = "",
             AltitudeMode = "",
             Load = "",
-            SheetName = "RAW",
+            SheetName = sheetName,
+            ColumnName = "Raw",
             ReportType = "XRY",
             Deleted = "",
             Bssid = "",
@@ -125,6 +131,9 @@ public class Xry : ReportReader
         if (!dirtyDict.TryGetValue("Geographic Link", out var gpsString))
             gpsString = "";
 
+        if (!dirtyDict.TryGetValue("sheetName", out var sheetName))
+            sheetName = "";
+
         if (string.IsNullOrEmpty(gpsString)) return new Locations();
 
         var (lat, lon) = ParseCoordinates(gpsString);
@@ -144,7 +153,8 @@ public class Xry : ReportReader
             Altitude = "",
             AltitudeMode = "",
             Load = "",
-            SheetName = "Geographic Link",
+            SheetName = sheetName,
+            ColumnName = "Geographic Link",
             ReportType = "XRY",
             Deleted = "",
             Bssid = "",

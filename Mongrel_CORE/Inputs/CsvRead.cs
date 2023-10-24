@@ -112,6 +112,7 @@ internal class CsvRead : Reader
                 AltitudeMode = record.AltitudeMode,
                 Load = "",
                 SheetName = record.Filetype,
+                ColumnName = $"Type-{record.GeometryType}",
                 ReportType = "GeoFetch",
                 Deleted = "",
                 Bssid = "",
