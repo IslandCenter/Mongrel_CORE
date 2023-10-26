@@ -6,15 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using static Mongrel.Common.Utils;
 using Yipper;
+using CsvHelper.Configuration;
 
 namespace Mongrel.Inputs.ReportReaders.Csv
 {
     public class GeoFetchHeaders
     {
         public int Id { get; set; }
-        public string SOFEX { get; set; }
+        public string Sofex { get; set; }
         public string Exhibit { get; set; }
-        public string DeviceType { get; set; }
+        public string Devicetype { get; set; }
         public string Filename { get; set; }
         public string Hash { get; set; }
         public string Path { get; set; }
@@ -22,25 +23,32 @@ namespace Mongrel.Inputs.ReportReaders.Csv
         public string Timestamp { get; set; }
         public string Longitude { get; set; }
         public string Latitude { get; set; }
-        public string MGRS { get; set; }
+        public string Mgrs { get; set; }
         public string Altitude { get; set; }
-        public string AltitudeMode { get; set; }
-        public string GeometryType { get; set; }
-        public string DeviceMake { get; set; }
-        public string DeviceModel { get; set; }
+        public string Altitudemode { get; set; }
+        public string Geometrytype { get; set; }
+        public string Devicemake { get; set; }
+        public string Devicemodel { get; set; }
     }
 
     public class GeoFetch
     {
-        public static IEnumerable<Locations> ReadGeoFetchCsv(IReader csv, string reportFileName)
+        public static IEnumerable<Locations> ReadGeoFetchCsv(string reportFilePath, CsvConfiguration? csvConfig)
         {
+            var reportFileName = Path.GetFileName(reportFilePath);
+
+            using var reader = new StreamReader(reportFilePath);
+            using var csv = new CsvReader(reader, csvConfig);
+
+            csv.Read();
+            csv.ReadHeader();
+
             IEnumerable<GeoFetchHeaders> records;
             try
             {
                 Logger.Instance.Info("Attempting to read file as GeoFetch CSV");
                 records = csv.GetRecords<GeoFetchHeaders>();
-
-                var testCsvRecordHeaders = csv.GetRecords<CsvRecord>();
+                _ = records.Any();
             }
             catch
             {
@@ -63,18 +71,18 @@ namespace Mongrel.Inputs.ReportReaders.Csv
 
                 yield return new Locations
                 {
-                    Sofex = record.SOFEX ?? sofex,
-                    DeviceType = record.DeviceType ?? deviceType,
+                    Sofex = record.Sofex ?? sofex,
+                    DeviceType = record.Devicetype ?? deviceType,
                     FileName = record.Filename,
                     Hash = record.Hash,
                     Path = record.Path,
                     TimeStr = record.Timestamp,
-                    Mgrs = record.MGRS ?? GetMgrs(normLat, normLon),
+                    Mgrs = record.Mgrs ?? GetMgrs(normLat, normLon),
                     Altitude = record.Altitude,
-                    AltitudeMode = record.AltitudeMode,
+                    AltitudeMode = record.Altitudemode,
                     Load = "",
                     SheetName = record.Filetype,
-                    ColumnName = $"Type-{record.GeometryType}",
+                    ColumnName = $"Type-{record.Geometrytype}",
                     ReportType = "GeoFetch",
                     Deleted = "",
                     Bssid = "",

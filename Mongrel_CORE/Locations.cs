@@ -23,9 +23,9 @@ public struct Locations
         string origin,
         string originalLon,
         string originalLat,
+        string timestamp,
         double convertedLon,
-        double convertedLat,
-        string timestamp)
+        double convertedLat)
     {
         Sofex = sofex;
         DeviceType = deviceType;

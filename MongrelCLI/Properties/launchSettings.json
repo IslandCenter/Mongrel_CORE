@@ -3,6 +3,10 @@
     "MongrelCLI": {
       "commandName": "Project",
       "commandLineArgs": "-i \"D:\\Documents\\work\\test_data\\Mongrel\\in\" -o \"D:\\Documents\\work\\test_data\\Mongrel\\out\\newAge\" -l \"D:\\Documents\\work\\test_data\\Mongrel\\logs\" -n \"asdf\""
+    },
+    "Recursion": {
+      "commandName": "Project",
+      "commandLineArgs": "-i \"D:\\Documents\\work\\test_data\\Mongrel\\out\\newAge\" -o \"D:\\Documents\\work\\test_data\\Mongrel\\out\" -l \"D:\\Documents\\work\\test_data\\Mongrel\\logs\" -n \"recursion\""
     }
   }
 }
