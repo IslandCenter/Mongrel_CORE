@@ -13,22 +13,22 @@ namespace Mongrel.Inputs.ReportReaders.Csv
     public class GeoFetchHeaders
     {
         public int Id { get; set; }
-        public string Sofex { get; set; }
+        public string SOFEX { get; set; }
         public string Exhibit { get; set; }
-        public string Devicetype { get; set; }
-        public string Filename { get; set; }
+        public string DeviceType { get; set; }
+        public string FileName { get; set; }
         public string Hash { get; set; }
         public string Path { get; set; }
-        public string Filetype { get; set; }
-        public string Timestamp { get; set; }
+        public string FileType { get; set; }
+        public string TimeStamp { get; set; }
         public string Longitude { get; set; }
         public string Latitude { get; set; }
         public string Mgrs { get; set; }
         public string Altitude { get; set; }
-        public string Altitudemode { get; set; }
-        public string Geometrytype { get; set; }
-        public string Devicemake { get; set; }
-        public string Devicemodel { get; set; }
+        public string AltitudeMode { get; set; }
+        public string GeomeTryType { get; set; }
+        public string DeviceMake { get; set; }
+        public string DeviceModel { get; set; }
     }
 
     public class GeoFetch
@@ -71,18 +71,18 @@ namespace Mongrel.Inputs.ReportReaders.Csv
 
                 yield return new Locations
                 {
-                    Sofex = record.Sofex ?? sofex,
-                    DeviceType = record.Devicetype ?? deviceType,
-                    FileName = record.Filename,
+                    Sofex = record.SOFEX ?? sofex,
+                    DeviceType = record.DeviceType ?? deviceType,
+                    FileName = record.FileName,
                     Hash = record.Hash,
                     Path = record.Path,
-                    TimeStr = record.Timestamp,
+                    TimeStr = record.TimeStamp,
                     Mgrs = record.Mgrs ?? GetMgrs(normLat, normLon),
                     Altitude = record.Altitude,
-                    AltitudeMode = record.Altitudemode,
+                    AltitudeMode = record.AltitudeMode,
                     Load = "",
-                    SheetName = record.Filetype,
-                    ColumnName = $"Type-{record.Geometrytype}",
+                    SheetName = record.FileType,
+                    ColumnName = $"Type-{record.GeomeTryType}",
                     ReportType = "GeoFetch",
                     Deleted = "",
                     Bssid = "",

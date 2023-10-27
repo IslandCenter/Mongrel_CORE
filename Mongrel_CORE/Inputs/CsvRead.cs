@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using CsvHelper;
 using CsvHelper.Configuration;
 using Mongrel.Inputs.ReportReaders.Csv;
 using Yipper;
@@ -24,7 +23,7 @@ internal class CsvRead : Reader
         {
             // Standardizes headers to Title Case since some CSVs have headers have had random capitalization
             // All CSV headers will need to be tile cased for the program to work
-            PrepareHeaderForMatch = args => CultureInfo.CurrentCulture.TextInfo.ToTitleCase(args.Header.ToLower()),
+            //PrepareHeaderForMatch = args => CultureInfo.CurrentCulture.TextInfo.ToTitleCase(args.Header.ToLower()),
         };
 
         
@@ -37,7 +36,8 @@ internal class CsvRead : Reader
             var dataRows = ReadGeoFetchCsv(filePath, csvConfig).ToList();
             if (dataRows.Count != 0) return dataRows;
 
-            dataRows = MongrelSelfRead.ReadMongrel(filePath, csvConfig).ToList();
+            var test = MongrelSelfRead.ReadMongrel(filePath, csvConfig);
+            dataRows = test.ToList();
             if (dataRows.Count != 0) return dataRows;
 
             Logger.Instance.Warning($"Unknown CSV type detected skipping file: {filePath}");

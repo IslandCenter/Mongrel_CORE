@@ -7,6 +7,10 @@
     "Recursion": {
       "commandName": "Project",
       "commandLineArgs": "-i \"D:\\Documents\\work\\test_data\\Mongrel\\out\\newAge\" -o \"D:\\Documents\\work\\test_data\\Mongrel\\out\" -l \"D:\\Documents\\work\\test_data\\Mongrel\\logs\" -n \"recursion\""
+    },
+    "GeoFetchMinis": {
+      "commandName": "Project",
+      "commandLineArgs": "-i \"D:\\Documents\\work\\test_data\\Mongrel\\in\\GEOFETCH\\minies\" -o \"D:\\Documents\\work\\test_data\\Mongrel\\out\" -l \"D:\\Documents\\work\\test_data\\Mongrel\\logs\" -n \"geoFetchMinisTestOut\""
     }
   }
 }
