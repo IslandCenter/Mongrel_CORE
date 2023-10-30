@@ -33,70 +33,71 @@ namespace Mongrel.Inputs.ReportReaders.Csv
 
     public class GeoFetch
     {
+        private static readonly string[] _GeoFetchHeaders =
+            {"id", "sofex", "exhibit", "devicetype", "filename", "hash", "path", "filetype", "timestamp",
+        "longitude", "latitude", "mgrs", "altitude", "altitudemode", "geometrytype", "devicemake", "devicemodel"};
+
+        public static bool IsGeoFetch(string filePath)
+        {
+            var headerRow = File.ReadLines(filePath).First();
+            var headers = headerRow.ToLower().Split(',');
+            return headers.SequenceEqual(_GeoFetchHeaders);
+        }
+
+        private static IEnumerable<Locations> ParseGeoFetchRows(IEnumerable<string> rows, string reportFileName)
+        {
+            return rows.Select(x => ParseGeoFetchRow(x, reportFileName));
+        }
+
+        private static Locations ParseGeoFetchRow(string row, string reportFileName)
+        {
+            var columns = row.Split(',');
+
+            return new Locations(
+                sofex: columns[1],
+                deviceType: columns[3],
+                fileName: columns[4],
+                hash: columns[5],
+                path: columns[6],
+                timeStr: columns[8],
+                mgrs: columns[11],
+                altitude: columns[12],
+                altitudeMode: columns[13],
+                load: "",
+                sheetName: "GeoFetch",
+                columnName: "Latitude Longitude",
+                reportType: "GeoFetch",
+                deleted: "",
+                bssid: "",
+                ssid: "",
+                notes: "",
+                exhibit: columns[2],
+                origin: reportFileName,
+                originalLon: columns[9],
+                originalLat: columns[10],
+                timestamp: columns[8],
+                convertedLon: TryConvertToDouble(columns[9]) ?? 999999,
+                convertedLat: TryConvertToDouble(columns[10]) ?? 999999);
+        }
+
         public static IEnumerable<Locations> ReadGeoFetchCsv(string reportFilePath, CsvConfiguration? csvConfig)
         {
+            if (!IsGeoFetch(reportFilePath))
+            {
+                Logger.Instance.Info("File not detected as a GeoFetch CSV file | Header mismach");
+                return Enumerable.Empty<Locations>();
+            };
+
             var reportFileName = Path.GetFileName(reportFilePath);
+            var locations = ParseGeoFetchRows(File.ReadLines(reportFilePath).Skip(1), reportFileName);
 
-            using var reader = new StreamReader(reportFilePath);
-            using var csv = new CsvReader(reader, csvConfig);
-
-            csv.Read();
-            csv.ReadHeader();
-
-            IEnumerable<GeoFetchHeaders> records;
-            try
+            if (!locations.Any())
             {
-                Logger.Instance.Info("Attempting to read file as GeoFetch CSV");
-                records = csv.GetRecords<GeoFetchHeaders>();
-                _ = records.Any();
-            }
-            catch
-            {
-                Logger.Instance.Info("File not detected as a GeoFetch CSV file");
-                yield break;
+                Logger.Instance.Info("File not detected as a GeoFetch CSV file | No rows");
+                return Enumerable.Empty<Locations>();
             }
 
-            var (sofex, exhibit, deviceType) = ParseReportFileName(reportFileName);
-
-            foreach (var record in records)
-            {
-                if (string.IsNullOrEmpty(record.Longitude) && string.IsNullOrEmpty(record.Latitude))
-                {
-                    yield return new Locations();
-                    continue;
-                }
-
-                var normLon = NormalizeCordStr(record.Longitude);
-                var normLat = NormalizeCordStr(record.Latitude);
-
-                yield return new Locations
-                {
-                    Sofex = record.SOFEX ?? sofex,
-                    DeviceType = record.DeviceType ?? deviceType,
-                    FileName = record.FileName,
-                    Hash = record.Hash,
-                    Path = record.Path,
-                    TimeStr = record.TimeStamp,
-                    Mgrs = record.Mgrs ?? GetMgrs(normLat, normLon),
-                    Altitude = record.Altitude,
-                    AltitudeMode = record.AltitudeMode,
-                    Load = "",
-                    SheetName = record.FileType,
-                    ColumnName = $"Type-{record.GeomeTryType}",
-                    ReportType = "GeoFetch",
-                    Deleted = "",
-                    Bssid = "",
-                    Ssid = "",
-                    Notes = "",
-                    Exhibit = record.Exhibit ?? exhibit,
-                    Origin = reportFileName,
-                    OriginalLon = record.Longitude,
-                    OriginalLat = record.Latitude,
-                    Timestamp = null,
-                    ConvertedLon = normLon,
-                    ConvertedLat = normLat
-                };
-            }
+            return locations;
         }
     }
 }

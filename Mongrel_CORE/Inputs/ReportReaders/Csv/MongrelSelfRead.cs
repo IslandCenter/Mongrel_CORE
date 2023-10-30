@@ -1,93 +1,80 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using Yipper;
+using static Mongrel.Common.Utils;
 
 namespace Mongrel.Inputs.ReportReaders.Csv
 {
     public class MongrelSelfRead
     {
-        public class MongrelHeaders
+        private static readonly string[] _MongrelHeaders = 
+            {"id", "sofex", "exhibit", "devicetype", "origin", "filename", "hash", "path", "timestr", "originallat", 
+            "originallon", "convertedlat", "convertedlon", "mgrs", "altitude", "altitudemode", "load", "sheetname",
+            "columnname", "reporttype", "deleted", "bssid", "ssid", "notes"};
+        
+        public static bool IsMongrel(string filePath)
         {
-            public int Id { get; set; }
-            public string? Sofex { get; set; }
-            public string? Exhibit { get; set; }
-            public string? Devicetype { get; set; }
-            public string? Origin { get; set; }
-            public string? Filename { get; set; }
-            public string? Hash { get; set; }
-            public string? Path { get; set; }
-            public string? Timestr { get; set; }
-            public string? Timestamp { get; set; }
-            public string? Originallat { get; set; }
-            public string? Originallon { get; set; }
-            public double Convertedlat { get; set; }
-            public double Convertedlon { get; set; }
-            public string? Mgrs { get; set; }
-            public string? Altitude { get; set; }
-            public string? Altitudemode { get; set; }
-            public string? Load { get; set; }
-            public string? Sheetname { get; set; }
-            public string? Columnname { get; set; }
-            public string? Reporttype { get; set; }
-            public string? Deleted { get; set; }
-            public string? Bssid { get; set; }
-            public string? Ssid { get; set; }
-            public string? Notes { get; set; }
+            var headerRow = File.ReadLines(filePath).First();
+            var headers = headerRow.ToLower().Split(',');
+            return headers.SequenceEqual(_MongrelHeaders);
         }
 
-        public static IEnumerable<Locations> ReadMongrel(string reportFilePath, CsvConfiguration? csvConfig)
+        private static IEnumerable<Locations> ParseMongrelRows(IEnumerable<string> rows, string reportFileName)
         {
+            return rows.Select(x => ParseMongrelRow(x, reportFileName));
+        }
+
+        private static Locations ParseMongrelRow(string row, string reportFileName)
+        {
+            var columns = row.Split(',');
+
+            return new Locations(
+                sofex: columns[0],
+                deviceType: columns[1],
+                fileName: $"Mongrel Injest: {reportFileName} |> {columns[2]}",
+                hash: columns[3],
+                path: columns[4],
+                timeStr: columns[5],
+                mgrs: columns[6],
+                altitude: columns[7],
+                altitudeMode: columns[8],
+                load: columns[9],
+                sheetName: columns[10],
+                columnName: columns[11],
+                reportType: columns[12],
+                deleted: columns[13],
+                bssid: columns[14],
+                ssid: columns[15],
+                notes: columns[16],
+                exhibit: columns[17],
+                origin: columns[18],
+                originalLon: columns[19],
+                originalLat: columns[20],
+                timestamp: columns[21],
+                convertedLon: TryConvertToDouble(columns[22]) ?? 999999,
+                convertedLat: TryConvertToDouble(columns[23]) ?? 999999);
+        }
+
+        public static IEnumerable<Locations> ReadMongrel(string reportFilePath)
+        {
+            Logger.Instance.Info("Attempting to read file as Mongrel CSV");
+
+            if (!IsMongrel(reportFilePath))
+            {
+                Logger.Instance.Info("File not detected as a Mongrel CSV file | Header mismach");
+                return Enumerable.Empty<Locations>();
+            };
+
             var reportFileName = Path.GetFileName(reportFilePath);
+            var locations = ParseMongrelRows(File.ReadLines(reportFilePath).Skip(1), reportFileName);
 
-            using var reader = new StreamReader(reportFilePath);
-            using var csv = new CsvReader(reader, csvConfig);
-
-            csv.Read();
-            csv.ReadHeader();
-
-            IEnumerable<MongrelHeaders> records;
-            try
+            if (!locations.Any())
             {
-                Logger.Instance.Info("Attempting to read file as Mongrel CSV");
-                records = csv.GetRecords<MongrelHeaders>();
-                _ = records.Any();
-            }
-            catch
-            {
-                Logger.Instance.Info("File not detected as a Mongrel CSV file");
-                yield break;
+                Logger.Instance.Info("File not detected as a Mongrel CSV file | No rows");
+                return Enumerable.Empty<Locations>();
             }
 
-            foreach (var record in records)
-            {
-                yield return new Locations
-                {
-                    Sofex = record.Sofex ?? "",
-                    DeviceType = record.Devicetype ?? "",
-                    FileName = record.Filename ?? "",
-                    Hash = record.Hash ?? "",
-                    Path = record.Path ?? "",
-                    TimeStr = record.Timestr ?? "",
-                    Mgrs = record.Mgrs ?? "",
-                    Altitude = record.Altitude ?? "",
-                    AltitudeMode = record.Altitudemode ?? "",
-                    Load = record.Load ?? "",
-                    SheetName = record.Sheetname ?? "",
-                    ColumnName = record.Columnname ?? "",
-                    ReportType = $"Mongrel Injest | Type: {record.Reporttype}",
-                    Deleted = record.Deleted ?? "",
-                    Bssid = record.Bssid ?? "",
-                    Ssid = record.Ssid ?? "",
-                    Notes = record.Notes ?? "",
-                    Exhibit = record.Exhibit ?? "",
-                    Origin = $"Mongrel Injest:{reportFileName} | Origin: {record.Origin}",
-                    OriginalLon = record.Originallon ?? "",
-                    OriginalLat = record.Originallat ?? "",
-                    Timestamp = record.Timestamp ?? "",
-                    ConvertedLon = record.Convertedlon,
-                    ConvertedLat = record.Convertedlat
-                };
-            }
+            return locations;
         }
     }
 }
