@@ -2,7 +2,7 @@
   "profiles": {
     "MongrelCLI": {
       "commandName": "Project",
-      "commandLineArgs": "-i \"D:\\Documents\\work\\test_data\\Mongrel\\in\" -o \"D:\\Documents\\work\\test_data\\Mongrel\\out\\newAge\" -l \"D:\\Documents\\work\\test_data\\Mongrel\\logs\" -n \"asdf\""
+      "commandLineArgs": "-i \"D:\\Documents\\work\\test_data\\Mongrel\\in\" -o \"D:\\Documents\\work\\test_data\\Mongrel\\out\\newAge\" -l \"D:\\Documents\\work\\test_data\\Mongrel\\logs\" -n \"dwa\""
     },
     "Recursion": {
       "commandName": "Project",
@@ -10,7 +10,7 @@
     },
     "GeoFetchMinis": {
       "commandName": "Project",
-      "commandLineArgs": "-i \"D:\\Documents\\work\\test_data\\Mongrel\\in\\GEOFETCH\\minies\" -o \"D:\\Documents\\work\\test_data\\Mongrel\\out\" -l \"D:\\Documents\\work\\test_data\\Mongrel\\logs\" -n \"geoFetchMinisTestOut\""
+      "commandLineArgs": "-i \"D:\\Documents\\work\\test_data\\Mongrel\\in\\Mongrel\" -o \"D:\\Documents\\work\\test_data\\Mongrel\\out\\recursive_tests\" -l \"D:\\Documents\\work\\test_data\\Mongrel\\logs\" -n \"geoFetchMinisTestOut\""
     }
   }
 }

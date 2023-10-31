@@ -51,6 +51,8 @@ namespace Mongrel.Inputs.ReportReaders.Csv
 
         private static Locations ParseGeoFetchRow(string row, string reportFileName)
         {
+            if (row.All(c => c == ',')) return new Locations();
+
             var columns = row.Split(',');
 
             return new Locations(
@@ -80,20 +82,22 @@ namespace Mongrel.Inputs.ReportReaders.Csv
                 convertedLat: TryConvertToDouble(columns[10]) ?? 999999);
         }
 
-        public static IEnumerable<Locations> ReadGeoFetchCsv(string reportFilePath, CsvConfiguration? csvConfig)
+        public static IEnumerable<Locations> ReadGeoFetchCsv(string reportFilePath)
         {
             if (!IsGeoFetch(reportFilePath))
             {
-                Logger.Instance.Info("File not detected as a GeoFetch CSV file | Header mismach");
+                Logger.Instance.Info($"File not detected as a GeoFetch CSV file | Header mismach, file: {reportFilePath}");
                 return Enumerable.Empty<Locations>();
             };
+
+            Logger.Instance.Info($"Reading as GeoFetch CSV file: {reportFilePath}");
 
             var reportFileName = Path.GetFileName(reportFilePath);
             var locations = ParseGeoFetchRows(File.ReadLines(reportFilePath).Skip(1), reportFileName);
 
             if (!locations.Any())
             {
-                Logger.Instance.Info("File not detected as a GeoFetch CSV file | No rows");
+                Logger.Instance.Info($"No rows in file: {reportFileName}");
                 return Enumerable.Empty<Locations>();
             }
 

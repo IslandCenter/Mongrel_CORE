@@ -8,9 +8,9 @@ namespace Mongrel.Inputs.ReportReaders.Csv
     public class MongrelSelfRead
     {
         private static readonly string[] _MongrelHeaders = 
-            {"id", "sofex", "exhibit", "devicetype", "origin", "filename", "hash", "path", "timestr", "originallat", 
-            "originallon", "convertedlat", "convertedlon", "mgrs", "altitude", "altitudemode", "load", "sheetname",
-            "columnname", "reporttype", "deleted", "bssid", "ssid", "notes"};
+            {"id", "sofex", "exhibit", "devicetype", "origin", "filename", "hash", "path", "timestr", "timestamp", 
+            "originallat", "originallon", "convertedlat", "convertedlon", "mgrs", "altitude", "altitudemode", 
+            "load", "sheetname", "columnname", "reporttype", "deleted", "bssid", "ssid", "notes"};
         
         public static bool IsMongrel(string filePath)
         {
@@ -26,33 +26,41 @@ namespace Mongrel.Inputs.ReportReaders.Csv
 
         private static Locations ParseMongrelRow(string row, string reportFileName)
         {
+            if (row.All(c => c == ',')) return new Locations();
+
             var columns = row.Split(',');
 
+            var testLon = TryConvertToDouble(columns[13]);
+            var testLat = TryConvertToDouble(columns[12]);
+
+            if (testLon == null || testLat == null)
+                Logger.Instance.Warning($"Invalid lat/lon skipping in Mongrel read : {testLat}, {testLon}");
+
             return new Locations(
-                sofex: columns[0],
-                deviceType: columns[1],
-                fileName: $"Mongrel Injest: {reportFileName} |> {columns[2]}",
-                hash: columns[3],
-                path: columns[4],
-                timeStr: columns[5],
-                mgrs: columns[6],
-                altitude: columns[7],
-                altitudeMode: columns[8],
-                load: columns[9],
-                sheetName: columns[10],
-                columnName: columns[11],
-                reportType: columns[12],
-                deleted: columns[13],
-                bssid: columns[14],
-                ssid: columns[15],
-                notes: columns[16],
-                exhibit: columns[17],
-                origin: columns[18],
-                originalLon: columns[19],
-                originalLat: columns[20],
-                timestamp: columns[21],
-                convertedLon: TryConvertToDouble(columns[22]) ?? 999999,
-                convertedLat: TryConvertToDouble(columns[23]) ?? 999999);
+                sofex: columns[1],
+                deviceType: columns[3],
+                fileName: $"Mongrel Injest: {reportFileName} |> {columns[5]}",
+                hash: columns[6],
+                path: columns[7],
+                timeStr: columns[8],
+                mgrs: columns[14],
+                altitude: columns[15],
+                altitudeMode: columns[16],
+                load: columns[17],
+                sheetName: columns[18],
+                columnName: columns[19],
+                reportType: columns[20],
+                deleted: columns[21],
+                bssid: columns[22],
+                ssid: columns[23],
+                notes: columns[24],
+                exhibit: columns[2],
+                origin: columns[4],
+                originalLon: columns[11],
+                originalLat: columns[10],
+                timestamp: columns[9],
+                convertedLon: TryConvertToDouble(columns[13]) ?? 999999,
+                convertedLat: TryConvertToDouble(columns[12]) ?? 999999);
         }
 
         public static IEnumerable<Locations> ReadMongrel(string reportFilePath)
@@ -61,16 +69,18 @@ namespace Mongrel.Inputs.ReportReaders.Csv
 
             if (!IsMongrel(reportFilePath))
             {
-                Logger.Instance.Info("File not detected as a Mongrel CSV file | Header mismach");
+                Logger.Instance.Info($"File not detected as a Mongrel CSV file | Header mismach, file {reportFilePath}");
                 return Enumerable.Empty<Locations>();
             };
+
+            Logger.Instance.Info($"Reading as Mongrel CSV, file: {reportFilePath}");
 
             var reportFileName = Path.GetFileName(reportFilePath);
             var locations = ParseMongrelRows(File.ReadLines(reportFilePath).Skip(1), reportFileName);
 
             if (!locations.Any())
             {
-                Logger.Instance.Info("File not detected as a Mongrel CSV file | No rows");
+                Logger.Instance.Info($"No rows in file {reportFileName}");
                 return Enumerable.Empty<Locations>();
             }
 
