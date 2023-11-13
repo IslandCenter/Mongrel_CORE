@@ -6,6 +6,7 @@ internal class CsvReportTypes
     {
         Unknown = -1,
         GeoFetch = 0,
+        Mongrel = 1,
     }
 
     public static string GetFileNameFromFormat(CsvReports format)
@@ -14,6 +15,7 @@ internal class CsvReportTypes
         {
             CsvReports.Unknown => "unknown",
             CsvReports.GeoFetch => "geofetch",
+            CsvReports.Mongrel => "mongrel",
             _ => throw new ArgumentOutOfRangeException(nameof(format), format, null)
         };
     }

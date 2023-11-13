@@ -6,7 +6,7 @@ public class BulkExtractor : ReportReader
 {
     public BulkExtractor(ExcelDocument document, IEnumerable<(string name, int index)> validSheetAndIndex) : base(document, validSheetAndIndex) { }
 
-    public override IEnumerable<Locations> GetLocations()
+    public override IEnumerable<Locations>? GetLocations()
     {
         var sheets = Document.GetRowsFromValidSheets(ValidSheetAndIndex);
 
@@ -53,7 +53,7 @@ public class BulkExtractor : ReportReader
                 Altitude = "",
                 AltitudeMode = "",
                 Load = "",
-                Category = relatedApplication,
+                SheetName = relatedApplication,
                 ReportType = "Bulk Extractor",
                 Deleted = "",
                 Bssid = "",
@@ -68,7 +68,5 @@ public class BulkExtractor : ReportReader
                 ConvertedLat = normLat
             };
         }
-
-
     }
 }

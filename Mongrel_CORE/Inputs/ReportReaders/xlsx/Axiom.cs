@@ -7,7 +7,7 @@ public class Axiom : ReportReader
 {
     public Axiom(ExcelDocument document, IEnumerable<(string name, int index)> validSheetAndIndex) : base(document, validSheetAndIndex) { }
 
-    public (string lat, string lon) GetLatLon(Dictionary<string, string> dirtyLocationDict)
+    public static (string lat, string lon) GetLatLon(Dictionary<string, string> dirtyLocationDict)
     {
         var lat = "";
         var lon = "";
@@ -41,7 +41,7 @@ public class Axiom : ReportReader
 
     }
 
-    public override IEnumerable<Locations> GetLocations()
+    public override IEnumerable<Locations>? GetLocations()
     {
         var sheets = Document.GetRowsFromValidSheets(ValidSheetAndIndex);
 
@@ -92,7 +92,8 @@ public class Axiom : ReportReader
                 Altitude = altitude,
                 AltitudeMode = "",
                 Load = "",
-                Category = sheetName,
+                SheetName = sheetName,
+                ColumnName = "Center of Map",
                 ReportType = "Axiom",
                 Deleted = deleted,
                 Bssid = "",

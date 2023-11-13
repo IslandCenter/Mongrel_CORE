@@ -1,5 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using CoordinateSharp;
+using SharpKml.Dom;
+using TimeSpan = System.TimeSpan;
 
 namespace Mongrel.Common;
 
@@ -17,7 +19,7 @@ public static class Utils
     {
         const double defaultOut = 99999.0;
 
-        if (String.IsNullOrEmpty(latOrLonString) || latOrLonString.Contains("E")) return defaultOut;
+        if (string.IsNullOrEmpty(latOrLonString) || latOrLonString.Contains('E')) return defaultOut;
 
         if (double.TryParse(latOrLonString, out var converted)) return converted;
 
@@ -34,6 +36,8 @@ public static class Utils
         return defaultOut;
     }
 
+    public static int GetLocationsHashCode(Locations locations) => ($"{locations.Mgrs}{locations.Altitude}").GetHashCode();
+
     public static string GetMgrs(double lat, double lon)
     {
         if (!ValidateLatLon(lat, lon)) return "INVALID";
@@ -42,7 +46,7 @@ public static class Utils
         return new Coordinate(lat, lon, el).MGRS.ToString();
     }
 
-    public static bool ValidateLatLon(double lat, double lon) => -90 <= lat && lat <= 90 && -180 <= lon && lon <= 180;
+    public static bool ValidateLatLon(double lat, double lon) => lat is >= -90 and <= 90 && lon is >= -180 and <= 180;
 
     public static string NormalizeTimeStr(string timeStr)
     {
@@ -71,16 +75,18 @@ public static class Utils
 
         var splitFile = reportName.Split('_');
 
-        if (splitFile.Length < 4) return defaultReturn;
-
-        if (splitFile.Length >= 5)
+        return splitFile.Length switch
         {
-            return !splitFile[0].Contains("SOFEX") ?
-                (splitFile[0], Regex.Replace(splitFile[1], @"([^0-9])+", "", RegexOptions.None, TimeSpan.FromMilliseconds(100)), splitFile[2]) :
-                (splitFile[1], Regex.Replace(splitFile[2], @"([^0-9])+", "", RegexOptions.None, TimeSpan.FromMilliseconds(100)), splitFile[3]);
-        }
-
-        return splitFile.Length == 4 ? (splitFile[0], splitFile[1].Substring(2), splitFile[2]) : defaultReturn;
+            < 4 => defaultReturn,
+            >= 5 => !splitFile[0].Contains("SOFEX")
+                ? (splitFile[0],
+                    Regex.Replace(splitFile[1], @"([^0-9])+", "", RegexOptions.None, TimeSpan.FromMilliseconds(100)),
+                    splitFile[2])
+                : (splitFile[1],
+                    Regex.Replace(splitFile[2], @"([^0-9])+", "", RegexOptions.None, TimeSpan.FromMilliseconds(100)),
+                    splitFile[3]),
+            _ => splitFile.Length == 4 ? (splitFile[0], splitFile[1][2..], splitFile[2]) : defaultReturn
+        };
     }
 
     public static (string BSSID, string SSID) GetBssidSSid(string data)

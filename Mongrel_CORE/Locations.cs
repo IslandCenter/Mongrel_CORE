@@ -7,12 +7,13 @@ public struct Locations
         string fileName,
         string hash,
         string path,
-        string timeStr,
+        string? timeStr,
         string mgrs,
         string altitude,
         string altitudeMode,
         string load,
-        string category,
+        string sheetName,
+        string columnName,
         string reportType,
         string deleted,
         string bssid,
@@ -22,9 +23,9 @@ public struct Locations
         string origin,
         string originalLon,
         string originalLat,
+        string timestamp,
         double convertedLon,
-        double convertedLat,
-        string timestamp)
+        double convertedLat)
     {
         Sofex = sofex;
         DeviceType = deviceType;
@@ -36,7 +37,8 @@ public struct Locations
         Altitude = altitude;
         AltitudeMode = altitudeMode;
         Load = load;
-        Category = category;
+        SheetName = sheetName;
+        ColumnName = columnName;
         ReportType = reportType;
         Deleted = deleted;
         Bssid = bssid;
@@ -56,12 +58,13 @@ public struct Locations
     public string FileName { get; set; }
     public string Hash { get; set; }
     public string Path { get; set; }
-    public string TimeStr { get; set; }
+    public string? TimeStr { get; set; }
     public string Mgrs { get; set; }
     public string Altitude { get; set; }
     public string AltitudeMode { get; set; }
     public string Load { get; set; }
-    public string Category { get; set; }
+    public string SheetName { get; set; }
+    public string ColumnName { get; set; }
     public string ReportType { get; set; }
     public string Deleted { get; set; }
     public string Bssid { get; set; }
@@ -74,4 +77,5 @@ public struct Locations
     public string Timestamp { get; set; }
     public double ConvertedLon { get; set; }
     public double ConvertedLat { get; set; }
+
 }

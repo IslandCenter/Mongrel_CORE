@@ -2,7 +2,7 @@
 
 namespace Mongrel;
 
-public struct CsvRecord
+public readonly struct CsvRecord
 {
     public CsvRecord(Locations rowData, int id = -1)
     {
@@ -24,7 +24,8 @@ public struct CsvRecord
         Altitude = rowData.Altitude;
         AltitudeMode = rowData.AltitudeMode;
         Load = rowData.Load;
-        Category = rowData.Category;
+        SheetName = rowData.SheetName;
+        ColumnName = rowData.ColumnName;
         ReportType = rowData.ReportType;
         Deleted = rowData.Deleted;
         Bssid = rowData.Bssid;
@@ -39,7 +40,7 @@ public struct CsvRecord
     [Index(5)] public string FileName { get; }
     [Index(6)] public string Hash { get; }
     [Index(7)] public string Path { get; }
-    [Index(8)] public string TimeStr { get; }
+    [Index(8)] public string? TimeStr { get; }
     [Index(9)] public string Timestamp { get; }
     [Index(10)] public string OriginalLat { get; }
     [Index(11)] public string OriginalLon { get; }
@@ -49,10 +50,11 @@ public struct CsvRecord
     [Index(15)] public string Altitude { get; }
     [Index(16)] public string AltitudeMode { get; }
     [Index(17)] public string Load { get; }
-    [Index(18)] public string Category { get; }
-    [Index(19)] public string ReportType { get; }
-    [Index(20)] public string Deleted { get; }
-    [Index(21)] public string Bssid { get; }
-    [Index(22)] public string Ssid { get; }
-    [Index(23)] public string Notes { get; }
+    [Index(18)] public string SheetName { get; }
+    [Index(19)] public string ColumnName { get; }
+    [Index(20)] public string ReportType { get; }
+    [Index(21)] public string Deleted { get; }
+    [Index(22)] public string Bssid { get; }
+    [Index(23)] public string Ssid { get; }
+    [Index(24)] public string Notes { get; }
 }

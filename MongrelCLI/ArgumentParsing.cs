@@ -33,12 +33,12 @@ internal class ArgumentParsing
 
         parser.Setup(arg => arg.OutName)
             .As('n', "outName")
-            .SetDefault(null)
+            .SetDefault(null!)
             .WithDescription("Output file name");
 
         parser.Setup(arg => arg.LogDir)
             .As('l', "logDir")
-            .SetDefault(null)
+            .SetDefault(null!)
             .WithDescription("Path to the logging directory");
 
         parser.Setup(arg => arg.LevelOfLog)

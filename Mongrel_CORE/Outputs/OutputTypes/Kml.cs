@@ -36,12 +36,12 @@ public class Kml : OutputFile
     {
         _writer.WriteLine(@"<?xml version=""1.0"" encoding=""UTF-8""?>");
         _writer.WriteLine(@"<kml xmlns=""http://www.opengis.net/kml/2.2"">");
-        WriteStartOrEndTag("Document", true);
+        WriteStartOrEndTag("Document");
     }
 
     private void WritePlaceMark(Locations location)
     {
-        WriteStartOrEndTag("Placemark", true);
+        WriteStartOrEndTag("Placemark");
 
         WriteInlineTag("name", location.Origin);
         WriteInlineTag("description", location.Notes);

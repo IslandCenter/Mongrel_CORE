@@ -10,7 +10,7 @@ public abstract class ReportReader : IDisposable
         Document = document;
         ValidSheetAndIndex = validSheetAndIndex;
     }
-    public abstract IEnumerable<Locations> GetLocations();
+    public abstract IEnumerable<Locations>? GetLocations();
 
     public static IEnumerable<Dictionary<string, string>> GetDirtyLocationDict(IEnumerable<(string sheetName, List<string> columnNames, IEnumerable<IEnumerable<string>> values)> sheets)
     {
