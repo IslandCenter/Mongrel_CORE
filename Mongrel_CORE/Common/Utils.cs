@@ -1,5 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using CoordinateSharp;
+using SharpKml.Dom;
+using TimeSpan = System.TimeSpan;
 
 namespace Mongrel.Common;
 
@@ -33,6 +35,8 @@ public static class Utils
         }
         return defaultOut;
     }
+
+    public static int GetLocationsHashCode(Locations locations) => ($"{locations.Mgrs}{locations.Altitude}").GetHashCode();
 
     public static string GetMgrs(double lat, double lon)
     {

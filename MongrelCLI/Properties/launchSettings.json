@@ -2,7 +2,7 @@
   "profiles": {
     "MongrelCLI": {
       "commandName": "Project",
-      "commandLineArgs": "-i \"D:\\Documents\\work\\test_data\\Mongrel\\in\" -o \"D:\\Documents\\work\\test_data\\Mongrel\\out\\newAge\" -l \"D:\\Documents\\work\\test_data\\Mongrel\\logs\" -n \"dwa\""
+      "commandLineArgs": "-i \"D:\\Documents\\work\\test_data\\Mongrel\\in\" -o \"D:\\Documents\\work\\test_data\\Mongrel\\out\\newAge\" -l \"D:\\Documents\\work\\test_data\\Mongrel\\logs\" -n \"tra\""
     },
     "Recursion": {
       "commandName": "Project",
