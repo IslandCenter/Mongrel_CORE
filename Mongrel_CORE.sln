@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mongrel", "Mongrel_CORE\Mon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongrelCLI", "MongrelCLI\MongrelCLI.csproj", "{39DB050B-CEC9-433E-BACE-B0DE3693332B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongrelGUI", "MognrelGUI\MongrelGUI.csproj", "{9DA6C3AD-623C-4497-B0E9-2EB79DED4E7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{39DB050B-CEC9-433E-BACE-B0DE3693332B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39DB050B-CEC9-433E-BACE-B0DE3693332B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39DB050B-CEC9-433E-BACE-B0DE3693332B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DA6C3AD-623C-4497-B0E9-2EB79DED4E7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DA6C3AD-623C-4497-B0E9-2EB79DED4E7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DA6C3AD-623C-4497-B0E9-2EB79DED4E7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DA6C3AD-623C-4497-B0E9-2EB79DED4E7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
